@@ -8,28 +8,33 @@ Compute mean(-log(softmax(input)_label))
 
 @input:  torch.Tensor((B,C))
 @target: torch.Tensor((B,), dtype=torch.int64)
-
 @return:  torch.Tensor((,))
 """
 class ClassificationLoss(torch.nn.Module):
+    
     def forward(self, input, target):
-
         return F.nll_loss(F.log_softmax(input, dim=1), target)
 
-
+    
+"""
+@x: torch.Tensor((B,3,64,64))
+@return: torch.Tensor((B,6))
+"""
 class LinearClassifier(torch.nn.Module):
     def __init__(self):
         super().__init__()
         self.linear = nn.Linear(3*64*64, 6)   
         
-    """
-    @x: torch.Tensor((B,3,64,64))
-    @return: torch.Tensor((B,6))
-    """
+
     def forward(self, x):
         return self.linear(x.view(-1, 64*64*3))
 
+"""
+@x. torch.Tensor((B,3,64,64))
+@return: torch.Tensor((B,6))
+"""
 class MLPClassifier(torch.nn.Module):
+    
     def __init__(self):
         super().__init__()
         self.layers = nn.Sequential(
@@ -37,18 +42,14 @@ class MLPClassifier(torch.nn.Module):
             nn.ReLU(),
             nn.Linear(80, 6),
             )
-    
 
     def forward(self, x):
-        """
-        Your code here
-
-        @x: torch.Tensor((B,3,64,64))
-        @return: torch.Tensor((B,6))
-        """
         return self.layers(x.view(-1, 64*64*3))
 
 
+"""
+Code provided by the class
+"""
 model_factory = {
     'linear': LinearClassifier,
     'mlp': MLPClassifier,
