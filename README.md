@@ -4,4 +4,9 @@ In this project, we implemented a linear classification and multi-layer perceptr
 
 In utils.py, we implemented a dataloader that would convert PIL images into tensors, and save them along with their corresponding labels. 
 
+<img src="./Supertuxkart Data.png" width = "600">
+
+
 In models.py, we created the neural networks itself. We take as input a tensor of size (B, 3, 64, 64) and output a tensor of size (B, 6), where B denotes the size of the batch. We implement the log-likelihood of a softmax classifier as our classification loss function.
+
+<img src="./Classification Loss.png" width = "600">
